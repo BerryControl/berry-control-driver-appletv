@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.berrycontrol</groupId>
+    <artifactId>berry-control-driver-appletv</artifactId>
+    <version>${revision}</version>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <revision>0.2.0</revision>
+        <spring-web.version>6.1.3</spring-web.version>
+        <berry-control-hub-driver-api.version>0.7.0</berry-control-hub-driver-api.version>
+
+        <driver.id>berry-control-driver-appletv</driver.id>
+        <driver.class>com.github.berrycontrol.drivers.appletv.AppleTvDeviceDriverDescriptor</driver.class>
+        <driver.version>${revision}</driver.version>
+        <driver.provider>Thomas Bonk</driver.provider>
+        <driver.dependencies />
+
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring-web.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.berrycontrol</groupId>
+            <artifactId>berry-control-hub-driver-api</artifactId>
+            <version>${berry-control-hub-driver-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!-- <finalName>${project.artifactId}-${project.version}-all</finalName> -->
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <attach>false</attach>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Driver-Id>${driver.id}</Driver-Id>
+                            <Driver-Version>${driver.version}</Driver-Version>
+                            <Driver-Provider>${driver.provider}</Driver-Provider>
+                            <Driver-Class>${driver.class}</Driver-Class>
+                            <Driver-Dependencies>${driver.dependencies}</Driver-Dependencies>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
